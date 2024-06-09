@@ -50,7 +50,7 @@ const Register = () => {
             });
 
             if (response.ok) {
-                router.push("/");
+                router.push("/login");
             }
         } catch (err) {
             console.log("Registration failed", err.message);
@@ -78,6 +78,7 @@ const Register = () => {
                         name="username"
                         value={formData.username}
                         onChange={handleChange}
+                         autoComplete="username"
                         required
                         className={inputStyle}
                     />
@@ -85,6 +86,7 @@ const Register = () => {
                         placeholder="Email"
                         type="email"
                         name="email"
+                        autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
                         className={inputStyle}
@@ -94,6 +96,7 @@ const Register = () => {
                         placeholder="Password"
                         type="password"
                         name="password"
+                        autoComplete="password"
                         value={formData.password}
                         onChange={handleChange}
                         className={inputStyle}
@@ -103,6 +106,7 @@ const Register = () => {
                         placeholder="Confirm Password"
                         type="password"
                         name="confirmPassword"
+                        autoComplete="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         className={inputStyle}
@@ -143,7 +147,7 @@ const Register = () => {
                     <p>Log In with Google</p>
                     <FcGoogle />
                 </button>
-                <Link href="/login">Already have an account? Log In Here</Link>
+                <Link href="/login" className="text-white">Already have an account? Log In Here</Link>
             </div>
         </div>
     );
