@@ -2,9 +2,9 @@ import { categories } from "../../lib/CategoriesData/data.js";
 import { IoIosImages } from "react-icons/io";
 import { BiTrash } from "react-icons/bi";
 
-const Form = ({ type, work, setWork }) => {
+const Form = ({ type, work, setWork, handleSubmit }) => {
     const handleUploadPhotos = (e) => {
-        const newPhotos = e.target.files;
+        const newPhotos = Array.from(e.target.files);
         setWork((prevWork) => {
             return {
                 ...prevWork,
@@ -35,15 +35,16 @@ const Form = ({ type, work, setWork }) => {
     return (
         <div className="bg-lime-200 md:px-20 py-10 min-h-screen">
             <h1 className="text-2xl font-bold">{type} Your Work</h1>
-            <form className="bg-white p-5 rounded-md ">
+            <form className="bg-white p-5 rounded-md" onSubmit={handleSubmit}>
                 <h3>Which of these categories best describes your work?</h3>
                 <div className="my-5 mb-10 flex flex-wrap gap-10">
                     {categories?.map((item, index) => (
                         <p
                             key={index}
-                            className={`${work.category === item ? "text-red-500" : ""} font-medium text-base cursor-pointer hover:text-red-500`}
+                            className={`font-medium text-base cursor-pointer ${work.category === item ? "text-red-500" : ""}`}
                             onClick={() => {
-                                setWork({ ...work, category: item });
+                                // console.log(`Selected category: ${item}`); // Debugging: Log the selected category
+                                setWork((prevWork) => ({ ...prevWork, category: item }));
                             }}
                         >
                             {item}
