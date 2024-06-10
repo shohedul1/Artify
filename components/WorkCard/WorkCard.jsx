@@ -76,7 +76,7 @@ const WorkCard = ({ work }) => {
 
     return (
         <div
-            className="relative cursor-pointer p-[10px] rounded-[10px] hover:shadow"
+            className="relative cursor-pointer p-[10px] rounded-[10px] hover:shadow hover:shadow-blue-500"
             onClick={() => {
                 router.push(`/work-details?id=${work._id}`);
             }}
@@ -142,7 +142,7 @@ const WorkCard = ({ work }) => {
                 </div>
             ) : (
                 <div
-                    className="icon"
+                    className="absolute right-5 top-5 text-xl border-none cursor-pointer z-50"
                     onClick={(e) => {
                         e.stopPropagation();
                         patchWishlist();

@@ -2,7 +2,7 @@ import Work from "../../../../../lib/models/Work"
 import connect from "../../../../../lib/mongdb/database"
 
 
-// any category data get
+// all user data get and and category data all data get
 export const GET = async (req, { params }) => {
     try {
         await connect()
