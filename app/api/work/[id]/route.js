@@ -1,7 +1,8 @@
 import connect from "../../../../lib/mongdb/database.js";
-import Work from "../../../../lib/models/Work.js"
+import Work from "../../../../lib/models/Work.js";
+import { writeFile } from 'fs/promises';
+import path from 'path';
 
-// get any single product
 export const GET = async (req, { params }) => {
     try {
         await connect();
@@ -12,11 +13,10 @@ export const GET = async (req, { params }) => {
 
         return new Response(JSON.stringify(work), { status: 200 });
     } catch (err) {
+        console.error("Error fetching the Work:", err);
         return new Response("Internal Server Error", { status: 500 });
     }
 };
-
-// edit any single product
 
 export const PATCH = async (req, { params }) => {
     try {
@@ -24,72 +24,60 @@ export const PATCH = async (req, { params }) => {
 
         const data = await req.formData();
 
-        /* Extract info from the data */
-        const creator = data.get("creator");
         const category = data.get("category");
         const title = data.get("title");
         const description = data.get("description");
         const price = data.get("price");
 
-        /* Get an array of uploaded photos */
         const photos = data.getAll("workPhotoPaths");
 
         const workPhotoPaths = [];
 
-        /* Process and store each photo  */
         for (const photo of photos) {
-            if (photo instanceof Object) {
-                // Read the photo as an ArrayBuffer
+            if (photo instanceof File) {
                 const bytes = await photo.arrayBuffer();
-
-                // Convert it to a Buffer
                 const buffer = Buffer.from(bytes);
 
-                // Define the destination path for the uploaded file
-                const workImagePath = `C:/Users/Phuc/Desktop/artify/public/uploads/${photo.name}`;
+                const uniqueFilename = `${Date.now()}-${photo.name}`;
+                const workImagePath = path.join(process.cwd(), 'public', 'uploads', uniqueFilename);
 
-                // Write the buffer to the filessystem
                 await writeFile(workImagePath, buffer);
 
-                // Store the file path in an array
-                workPhotoPaths.push(`/uploads/${photo.name}`);
+                workPhotoPaths.push(`/uploads/${uniqueFilename}`);
             } else {
-                // If it's an old photo
                 workPhotoPaths.push(photo);
             }
         }
 
-        /* Find the existing Work */
-        const existingWork = await Work.findById(params.id)
+        const existingWork = await Work.findById(params.id);
 
         if (!existingWork) {
             return new Response("The Work Not Found", { status: 404 });
         }
 
-        /* Update the Work with the new data */
-        existingWork.category = category
-        existingWork.title = title
-        existingWork.description = description
-        existingWork.price = price
-        existingWork.workPhotoPaths = workPhotoPaths
+        existingWork.category = category;
+        existingWork.title = title;
+        existingWork.description = description;
+        existingWork.price = price;
+        existingWork.workPhotoPaths = workPhotoPaths;
 
-        await existingWork.save()
+        await existingWork.save();
 
-        return new Response("Successfully updated the Work", { status: 200 })
+        return new Response("Successfully updated the Work", { status: 200 });
     } catch (err) {
-        console.log(err)
-        return new Response("Error updating the Work", { status: 500 })
+        console.error("Error updating the Work:", err);
+        return new Response("Error updating the Work", { status: 500 });
     }
 };
 
 export const DELETE = async (req, { params }) => {
     try {
-        await connect()
-        await Work.findByIdAndDelete(params.id)
+        await connect();
+        await Work.findByIdAndDelete(params.id);
 
-        return new Response("Successfully deleted the Work", { status: 200 })
+        return new Response("Successfully deleted the Work", { status: 200 });
     } catch (err) {
-        console.log(err)
-        return new Response("Error deleting the Work", { status: 500 })
+        console.error("Error deleting the Work:", err);
+        return new Response("Error deleting the Work", { status: 500 });
     }
-}
+};

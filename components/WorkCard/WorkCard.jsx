@@ -73,7 +73,7 @@ const WorkCard = ({ work }) => {
         const data = await response.json();
         update({ user: { wishlist: data.wishlist } }); // update session
     };
-
+    console.log(work.creator.profileImagePath, 'workId', work._id)
     return (
         <div
             className="relative cursor-pointer p-[10px] rounded-[10px] hover:shadow hover:shadow-blue-500"
@@ -116,8 +116,8 @@ const WorkCard = ({ work }) => {
                 <div>
                     <h3 className="text-base mb-1.5">{work.title}</h3>
                     <div className="flex items-center gap-1.5">
-                        <img src={work.creator.profileImagePath} alt="creator" className="w-10 h-10 rounded-full" />
-                        <span className="text-sm font-semibold">{work.creator.username}</span> in <span>{work.category}</span>
+                        <img src={work?.creator?.profileImagePath} alt="creator" className="w-10 h-10 rounded-full" />
+                        <span className="text-sm font-semibold">{work.creator.username}asfd</span> in <span>{work.category}</span>
                     </div>
                 </div>
                 <div className="bg-blue-500 p-2 rounded-2xl font-semibold text-base">${work.price}</div>
@@ -149,15 +149,7 @@ const WorkCard = ({ work }) => {
                     }}
                 >
                     {isLiked ? (
-                        <MdFavorite
-                            sx={{
-                                borderRadius: "50%",
-                                backgroundColor: "white",
-                                color: "red",
-                                padding: "5px",
-                                fontSize: "30px",
-                            }}
-                        />
+                        <MdFavorite className="text-red-500" />
                     ) : (
                         <MdFavoriteBorder
                             sx={{

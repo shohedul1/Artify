@@ -161,7 +161,7 @@ const WorkDetails = () => {
                     ) : (
                         <div className="flex items-center gap-2.5 cursor-pointer" onClick={patchWishlist}>
                             {isLiked ? (
-                                <MdFavorite sx={{ color: "red" }} />
+                                <MdFavorite className="text-red-500" />
                             ) : (
                                 <MdFavoriteBorder />
                             )}

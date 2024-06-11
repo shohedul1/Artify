@@ -11,24 +11,24 @@ import { useRouter } from "next/navigation"
 const Navbar = () => {
     const { data: session } = useSession()
     const user = session?.user
-
+  
     const [dropdownMenu, setDropdownMenu] = useState(false)
-
+  
     const handleLogout = async () => {
-        signOut({ callbackUrl: '/login' })
+      signOut({ callbackUrl: '/login' })
     }
-
+  
     const [query, setQuery] = useState('')
-
+   
     const router = useRouter()
     const searchWork = async () => {
-        router.push(`/search/${query}`)
+      router.push(`/search/${query}`)
     }
-
+  
     const cart = user?.cart
 
     return (
-        <div className='px-20 border-b border-gray-500 py-3 flex justify-between items-center relative p-2.5 '>
+        <div className='px-20 border-b border-gray-500 py-3 flex justify-between  items-center relative p-2.5 '>
             <Link href="/">
                 <img src='/assets/logo.png' alt='logo' className="w-20 cursor-pointer" />
             </Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
                 )}
 
                 {dropdownMenu && user && (
-                    <div className='absolute right-20 top-24 flex flex-col rounded-md shadow-2xl border p-5 items-start text-black font-bold gap- bg-white'>
+                    <div className='absolute right-2 top-24 flex flex-col rounded-md shadow-2xl border p-5 z-50 items-start text-black font-bold gap- bg-white'>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/wishlist">Wishlist</Link>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/cart">Cart</Link>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/order">Orders</Link>
