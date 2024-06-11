@@ -71,7 +71,7 @@ const Navbar = () => {
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/wishlist">Wishlist</Link>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/cart">Cart</Link>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/order">Orders</Link>
-                        <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href={`/shop?id=${user._id}`}>Your Shop</Link>
+                        <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href={`/shop/?id=${user._id}`}>Your Shop</Link>
                         <Link onClick={() => setDropdownMenu(!dropdownMenu)} className="hover:text-red-500" href="/create-work">Sell Your Work</Link>
                         <button className="hover:text-red-500" onClick={handleLogout}>Log Out</button>
                     </div>
